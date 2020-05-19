@@ -1,9 +1,10 @@
 import React, { useState, useEffect } from 'react'
 import config from '../config'
+import Forecast from './Forecast'
 
 const CurrentLocation = () => {
 
-    const [weather, setWeather] = useState({
+    const [locationInfo, setLocationInfo] = useState({
         lat: undefined,
         lon: undefined,
         errorMessage: undefined,
@@ -46,8 +47,7 @@ const CurrentLocation = () => {
 
         const data = await apicall.json()
 
-        console.log(data)
-        setWeather({
+        setLocationInfo({
             lat: lat,
             lon: lon,
             tempC: Math.round(data.main.temp),
@@ -56,13 +56,13 @@ const CurrentLocation = () => {
             country: data.sys.country,
             humidity: data.main.humidity,
             main: data.weather[0].main
-        })
-        
+        })     
     }
 
     return (
         <div>
-            Yeah
+            <Forecast />
+            
 
         </div>
     )
