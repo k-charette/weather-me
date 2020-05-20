@@ -1,20 +1,19 @@
 import React, { useState, useEffect } from 'react'
 import axios from 'axios'
-import config from '../config'
-import ReactAnimatedWeather from 'react-animated-weather'
+import Weather from './CountryWeather'
 
-const Forecast = (props) => {
+const Forecast = ({API_KEY}) => {
 
     const [query, setQuery] = useState('')
     const [error, setError] = useState('')
-    const [weather, setWeather] = useState({})
+    const [weather, setWeather] = useState([])
 
     const search = (city) => {
         console.log(city)
         axios.get(
-            `${config.base}weather?q=${
+            `https://api.openweathermap.org/data/2.5/weather?q=${
             city != "[object Object]" ? city : query
-            }&units=metric&APPID=${config.key}`
+            }&units=metric&APPID=${API_KEY}`
         )
         .then((response) => {
             setWeather(response.data)
@@ -27,34 +26,14 @@ const Forecast = (props) => {
             setError({ message: 'Not Found', query: query })
         })
     }
-
-    const defaults ={
-        color: "white",
-        size: 112,
-        animate: true
-        }
     
     useEffect(() => {
         search('Tokyo')
     }, [])
-
-    console.log(weather)
+    
     return (
-        <div className='forecase'>
-            <div className='forecast-icon'>
-                <ReactAnimatedWeather 
-                    icon={props.icon}
-                    color={defaults.color}
-                    size={defaults.size}
-                    animate={defaults.animate}
-                />
-            </div>
-
-            <div>
-                <h3>{weather.name}</h3>
-            </div>
-
-            <h3>Search Box</h3>
+        <div style={{margin: 'auto'}} className='forecast'>
+            <h3>Search</h3>
             <div>
                 <input 
                     type='text'
@@ -67,6 +46,18 @@ const Forecast = (props) => {
                     <img src='https://images.avishkaar.cc/workflow/newhp/search-white.png' alt='search' onClick={search}/>
                 </div>
 
+            </div>
+
+            <div> 
+            {weather.name}
+            { 
+                Object.keys(weather).map(key => 
+                    <Weather 
+                        key={key}
+                        country={weather[key].country}
+                    />
+                )
+            }
             </div>
         </div>
     )

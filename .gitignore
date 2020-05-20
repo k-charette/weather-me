@@ -11,7 +11,8 @@
 # production
 /build
 
-/config.js
+#apikeys
+.env
 
 # misc
 .DS_Store

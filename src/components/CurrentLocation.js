@@ -1,8 +1,9 @@
 import React, { useState, useEffect } from 'react'
-import config from '../config'
-import Forecast from './Forecast'
+import Clock from 'react-live-clock'
+import ReactAnimatedWeather from 'react-animated-weather/build/ReactAnimatedWeather'
+import { Box, Text, Flex } from "@chakra-ui/core";
 
-const CurrentLocation = () => {
+const CurrentLocation = ({ API_KEY }) => {
 
     const [locationInfo, setLocationInfo] = useState({
         lat: undefined,
@@ -14,20 +15,24 @@ const CurrentLocation = () => {
         country: undefined,
         humidity: undefined,
         description: undefined,
-        icon: "CLEAR_DAY",
         sunrise: undefined,
         sunset: undefined,
         errorMsg: undefined,
     })
 
+    const [weatherIcon, setWeatherIcon] = useState({
+        icon: "CLEAR_DAY",
+    })
+
     useEffect(() => {
+        
         if (navigator.geolocation){
             getPosition()
                 .then((position) => {
                     getWeather(position.coords.latitude, position.coords.longitude)
                 })
                 .catch((err) => {
-                    getWeather(28.67, 77.22)
+                    getWeather(35.65, 139.83)
                 })
         } else {
             alert('Geolocation not available')
@@ -42,7 +47,7 @@ const CurrentLocation = () => {
 
     const getWeather = async (lat, lon) => {
         const apicall = await fetch(
-            `${config.base}weather?lat=${lat}&lon=${lon}&units=metric&APPID=${config.key}`
+            `https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&units=metric&APPID=${API_KEY}`
         )
 
         const data = await apicall.json()
@@ -56,15 +61,89 @@ const CurrentLocation = () => {
             country: data.sys.country,
             humidity: data.main.humidity,
             main: data.weather[0].main
-        })     
+        }) 
+        
+        switch (locationInfo.main) {
+            case "Haze":
+              setWeatherIcon({ icon: "CLEAR_DAY" });
+              break;
+            case "Clouds":
+              setWeatherIcon({ icon: "CLOUDY" });
+              break;
+            case "Rain":
+              setWeatherIcon({ icon: "RAIN" });
+              break;
+            case "Snow":
+              setWeatherIcon({ icon: "SNOW" });
+              break;
+            case "Dust":
+              setWeatherIcon({ icon: "WIND" });
+              break;
+            case "Drizzle":
+              setWeatherIcon({ icon: "SLEET" });
+              break;
+            case "Fog":
+              setWeatherIcon({ icon: "FOG" });
+              break;
+            case "Smoke":
+              setWeatherIcon({ icon: "FOG" });
+              break;
+            case "Tornado":
+              setWeatherIcon({ icon: "WIND" });
+              break;
+            default:
+              setWeatherIcon({ icon: "CLEAR_DAY" });
+          }
     }
 
-    return (
-        <div>
-            <Forecast />
-            
+    const defaults ={
+        color: "black",
+        size: 85,
+        animate: true
+    }
+    
+    console.log(locationInfo)
 
-        </div>
+    const date = new Date().toDateString()
+
+    let locationData = locationInfo ? (
+            <div>
+                <Box textAlign='right'>
+                    {locationInfo.city}, {locationInfo.country}
+                </Box>
+                <Box textAlign='center'>
+                    <div>
+                        {" "}
+                        <ReactAnimatedWeather 
+                            icon={weatherIcon.icon}
+                            color={defaults.color}
+                            size={defaults.size}
+                            animate={defaults.animate}
+                        />    
+                    </div>
+
+                    <div>
+                        {locationInfo.main}
+                    </div>
+                
+            
+                    <div>
+                        <p>{locationInfo.tempF}°<span>F</span> / {locationInfo.tempC}°<span>C</span> </p>
+                    </div> 
+                
+                    <div>
+                        <Clock format='HH:mm:ss' interval={1000} ticking={true}/>
+                    </div>
+                    <div>   
+                        { date }
+                    </div>
+                </Box>
+            </div>
+    ) : <> </>
+    return (
+        <div style={{margin: 'auto'}}>  
+            {locationData}
+        </div>      
     )
 }
 
