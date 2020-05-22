@@ -103,6 +103,7 @@ const CurrentLocation = ({ API_KEY }) => {
     }
 
     const date = new Date().toDateString()
+    
 
     let locationData = locationInfo ? (
             <>
