@@ -1,10 +1,12 @@
 import React from 'react'
 
-const CountryWeather = ({country}) => {
+const CountryWeather = ({country, tempC}) => {
+
+    
     return (
         <div>
             {country}
-
+            {tempC}
         </div>
     )
 }

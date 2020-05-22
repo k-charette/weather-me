@@ -1,22 +1,35 @@
 import React, { useState, useEffect } from 'react'
 import axios from 'axios'
-import Weather from './CountryWeather'
+import { Box, Divider, Input } from "@chakra-ui/core";
 
 const Forecast = ({API_KEY}) => {
 
     const [query, setQuery] = useState('')
     const [error, setError] = useState('')
-    const [weather, setWeather] = useState([])
+    const [weather, setWeather] = useState({
+        country: '',
+        tempC: '',
+        description: '',
+        name: '',
+        humidity: '',
+    })
 
     const search = (city) => {
-        console.log(city)
         axios.get(
             `https://api.openweathermap.org/data/2.5/weather?q=${
             city != "[object Object]" ? city : query
             }&units=metric&APPID=${API_KEY}`
         )
         .then((response) => {
-            setWeather(response.data)
+            console.log(response.data)
+            setWeather({
+                country: response.data.sys.country,
+                tempC: Math.round(response.data.main.temp),
+                tempF: Math.round(response.data.main.temp * 1.8 + 32),
+                description: response.data.weather[0].main,
+                name: response.data.name,
+                humidity: response.data.main.humidity
+            })
             setQuery('')
         })
         .catch((error) => {
@@ -30,35 +43,36 @@ const Forecast = ({API_KEY}) => {
     useEffect(() => {
         search('Tokyo')
     }, [])
+
+    const { name, country, description, tempC, tempF, } = weather
     
     return (
         <div style={{margin: 'auto'}} className='forecast'>
-            <h3>Search</h3>
-            <div>
-                <input 
-                    type='text'
-                    className='search-bar'
-                    placeholder='Search any city'
-                    onChange={(e) => setQuery(e.target.value)}
-                    value={query}
-                />
-                <div className='img-box'>
-                    <img src='https://images.avishkaar.cc/workflow/newhp/search-white.png' alt='search' onClick={search}/>
-                </div>
-
-            </div>
-
-            <div> 
-            {weather.name}
-            { 
-                Object.keys(weather).map(key => 
-                    <Weather 
-                        key={key}
-                        country={weather[key].country}
+            <Box>
+                <Box textAlign='center' fontSize={24} fontWeight={600}>       
+                </Box>
+                <Box>
+                    <Input 
+                        type='text'
+                        size='lg'
+                        className='search-bar'
+                        placeholder='Search any city'
+                        onChange={(e) => setQuery(e.target.value)}
+                        value={query}
                     />
-                )
-            }
-            </div>
+                    <img src='https://images.avishkaar.cc/workflow/newhp/search-white.png' alt='search' onClick={search}/>
+                </Box>
+                <Box textAlign='center' fontWeigh='bold' fontSize={30}>
+                    {name}, {country}
+                </Box>
+                <Divider width='full' />
+                <Box textAlign='left'>
+                    Temperature: {tempF}°<span>F</span> / {tempC}°<span>C</span>
+                </Box>
+                <Box>
+                    {description}
+                </Box>
+            </Box>
         </div>
     )
 }

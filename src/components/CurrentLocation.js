@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import Clock from 'react-live-clock'
 import ReactAnimatedWeather from 'react-animated-weather/build/ReactAnimatedWeather'
-import { Box, Text, Flex } from "@chakra-ui/core";
+import { Box, Divider } from "@chakra-ui/core";
 
 const CurrentLocation = ({ API_KEY }) => {
 
@@ -21,7 +21,7 @@ const CurrentLocation = ({ API_KEY }) => {
     })
 
     const [weatherIcon, setWeatherIcon] = useState({
-        icon: "CLEAR_DAY",
+        icon: "CLEAR_DAY"
     })
 
     useEffect(() => {
@@ -98,21 +98,19 @@ const CurrentLocation = ({ API_KEY }) => {
 
     const defaults ={
         color: "black",
-        size: 85,
+        size: 120,
         animate: true
     }
-    
-    console.log(locationInfo)
 
     const date = new Date().toDateString()
 
     let locationData = locationInfo ? (
-            <div>
-                <Box textAlign='right'>
+            <>
+                <Box textAlign='right' fontSize={35} fontWeight={600}>
                     {locationInfo.city}, {locationInfo.country}
                 </Box>
-                <Box textAlign='center'>
-                    <div>
+                <Box textAlign='center' fontWeight='bold'>
+                    <Box padding={15} m={20}>
                         {" "}
                         <ReactAnimatedWeather 
                             icon={weatherIcon.icon}
@@ -120,25 +118,26 @@ const CurrentLocation = ({ API_KEY }) => {
                             size={defaults.size}
                             animate={defaults.animate}
                         />    
-                    </div>
+                    </Box>
+                    <Box fontSize={50} mb={30}>
+                        {locationInfo.tempF}°<span>F</span> | {locationInfo.tempC}°<span>C</span>
+                    </Box>
 
-                    <div>
+                    <Box fontSize={45}>
                         {locationInfo.main}
-                    </div>
-                
-            
-                    <div>
-                        <p>{locationInfo.tempF}°<span>F</span> / {locationInfo.tempC}°<span>C</span> </p>
-                    </div> 
-                
-                    <div>
-                        <Clock format='HH:mm:ss' interval={1000} ticking={true}/>
-                    </div>
-                    <div>   
-                        { date }
-                    </div>
+                    </Box>
+                    <Divider w={1/2}/>
+                    <Box textAlign='center'>
+                        
+                        <Box fontSize={["sm", "md", "lg", "xl"]} p='2'>  
+                            { date }
+                        </Box>
+                        <Box fontSize={["sm", "md", "lg", "xl"]} p='2'>
+                            <Clock format='HH:mm:ss' interval={1000} ticking={true}/>
+                        </Box>
+                    </Box>
                 </Box>
-            </div>
+            </>
     ) : <> </>
     return (
         <div style={{margin: 'auto'}}>  
