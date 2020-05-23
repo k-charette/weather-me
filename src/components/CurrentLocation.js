@@ -127,13 +127,12 @@ const CurrentLocation = ({ API_KEY }) => {
                     <Box fontSize={45}>
                         {locationInfo.main}
                     </Box>
-                    <Divider w={1/2}/>
-                    <Box textAlign='center'>
-                        
-                        <Box fontSize={["sm", "md", "lg", "xl"]} p='2'>  
+                    <Divider w='full' />
+                    <Box>   
+                        <Box textAlign='center'fontSize={25} p='2'>  
                             { date }
                         </Box>
-                        <Box fontSize={["sm", "md", "lg", "xl"]} p='2'>
+                        <Box fontSize={25} textAlign='center' p='2'>
                             <Clock format='HH:mm:ss' interval={1000} ticking={true}/>
                         </Box>
                     </Box>
