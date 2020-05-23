@@ -104,9 +104,6 @@ const CurrentLocation = ({ API_KEY }) => {
 
     const date = new Date().toDateString()
 
-    console.log(locationInfo)
-    
-
     let locationData = locationInfo ? (
             <>
                 <Box textAlign='right' fontSize={40} fontWeight={600}>
