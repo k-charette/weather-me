@@ -49,7 +49,7 @@ const Forecast = ({API_KEY}) => {
     }
     
     useEffect(() => {
-        search('Boston')
+        search('Tokyo')
     }, [])
 
     const convertSunset = () => {
