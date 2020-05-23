@@ -107,10 +107,10 @@ const CurrentLocation = ({ API_KEY }) => {
 
     let locationData = locationInfo ? (
             <>
-                <Box textAlign='right' fontSize={35} fontWeight={600}>
+                <Box textAlign='right' fontSize={40} fontWeight={600}>
                     {locationInfo.city}, {locationInfo.country}
                 </Box>
-                <Box textAlign='center' fontWeight='bold'>
+                <Box textAlign='center' fontWeight={600}>
                     <Box padding={15} m={20}>
                         {" "}
                         <ReactAnimatedWeather 
@@ -120,11 +120,11 @@ const CurrentLocation = ({ API_KEY }) => {
                             animate={defaults.animate}
                         />    
                     </Box>
-                    <Box fontSize={50} mb={30}>
+                    <Box fontSize={40} mb={30}>
                         {locationInfo.tempF}°<span>F</span> | {locationInfo.tempC}°<span>C</span>
                     </Box>
 
-                    <Box fontSize={45}>
+                    <Box fontSize={35}>
                         {locationInfo.main}
                     </Box>
                     <Divider w='full' />
