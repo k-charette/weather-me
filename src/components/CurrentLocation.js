@@ -32,7 +32,7 @@ const CurrentLocation = ({ API_KEY }) => {
                     getWeather(position.coords.latitude, position.coords.longitude)
                 })
                 .catch((err) => {
-                    getWeather(35.65, 139.83)
+                    getWeather(40.71,-74.01)
                 })
         } else {
             alert('Geolocation not available')
@@ -103,6 +103,8 @@ const CurrentLocation = ({ API_KEY }) => {
     }
 
     const date = new Date().toDateString()
+
+    console.log(locationInfo)
     
 
     let locationData = locationInfo ? (
