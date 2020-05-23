@@ -107,7 +107,7 @@ const CurrentLocation = ({ API_KEY }) => {
 
     let locationData = locationInfo ? (
             <>
-                <Box textAlign='right' fontSize={40} fontWeight={600}>
+                <Box textAlign='center' fontSize={40} fontWeight={600}>
                     {locationInfo.city}, {locationInfo.country}
                 </Box>
                 <Box textAlign='center' fontWeight={600}>
