@@ -25,8 +25,6 @@ const Forecast = ({API_KEY}) => {
             }&units=metric&APPID=${API_KEY}`
         )
         .then((response) => {
-
-            console.log(response.data)
             setWeather({
                 country: response.data.sys.country,
                 tempC: Math.round(response.data.main.temp),

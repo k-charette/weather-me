@@ -25,7 +25,6 @@ const CurrentLocation = ({ API_KEY }) => {
     })
 
     useEffect(() => {
-        
         if (navigator.geolocation){
             getPosition()
                 .then((position) => {
