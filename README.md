@@ -1,5 +1,7 @@
 # Weather Us
 
+Find out the weather in your current location or wherever! 
+
 [LIVE DEMO](https://weather-us.netlify.app/)
 
 ## Getting Started
