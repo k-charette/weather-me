@@ -21,7 +21,7 @@ const CurrentLocation = ({ API_KEY }) => {
     })
 
     const [weatherIcon, setWeatherIcon] = useState({
-        icon: "CLEAR_DAY"
+        icon: 'CLEAR_DAY'
     })
 
     useEffect(() => {
@@ -61,8 +61,8 @@ const CurrentLocation = ({ API_KEY }) => {
             humidity: data.main.humidity,
             main: data.weather[0].main
         }) 
-        
-        switch (locationInfo.main) {
+
+        switch (data.weather[0].main) {
             case "Haze":
               setWeatherIcon({ icon: "CLEAR_DAY" });
               break;
@@ -94,7 +94,9 @@ const CurrentLocation = ({ API_KEY }) => {
               setWeatherIcon({ icon: "CLEAR_DAY" });
           }
     }
+    console.log(weatherIcon)
 
+    console.log(locationInfo.main)
     const defaults ={
         color: "black",
         size: 120,
