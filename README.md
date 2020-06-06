@@ -6,6 +6,12 @@ Find out the weather in your current location or wherever!
 
 ## Getting Started
 
+### Prerequisite
+Please create a .env.local file with your OpenWeatherMap API key in order for the data to be fetched successfully.
+```shell
+REACT_APP_OPENWEATHERMAP_API_KEY=your_open_weather_map_api_key
+```
+
 ### Clone
 
 - Clone this repo to your local machine using `https://github.com/k-charette/weather-me.git`
